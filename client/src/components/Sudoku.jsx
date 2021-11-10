@@ -46,7 +46,7 @@ const Sudoku = ({ startValues, handleFinish }, ref) => {
 
 	useImperativeHandle(ref, () => ({
 		async autoSolve() {
-			const response = await fetch(`http://localhost:5000/api/solve`, {
+			const response = await fetch(`http://https://sudokumaster-se.herokuapp.com/api/solve`, {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(realValues),

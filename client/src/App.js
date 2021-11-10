@@ -14,7 +14,7 @@ function App() {
 	useEffect(() => {
 		const fetchNewSudoku = async () => {
 			const response = await fetch(
-				`http://localhost:5000/api/generate/${difficulty}`
+				`https://sudokumaster-se.herokuapp.com/api/generate/${difficulty}`
 			);
 			const data = await response.json();
 			setStartValues(data.sudoku);
