@@ -1,0 +1,49 @@
+.sudoku {
+	display: grid;
+	grid-template-columns: repeat(9, 1fr);
+	grid-template-rows: repeat(9, 1fr);
+	height: 450px;
+}
+.sudoku > div > input {
+	width: 49px;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border: 1px solid aqua;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	text-align: center;
+	font-size: 2em;
+	background: rgb(0, 82, 82);
+	color: white;
+	font-weight: bold;
+}
+.sudoku > div:nth-child(3n) > input {
+	border-right: 4px solid aqua;
+}
+.sudoku > div:nth-child(n + 28):nth-child(-n + 36) > input,
+.sudoku > div:nth-child(n + 55):nth-child(-n + 63) > input {
+	border-top: 4px solid aqua;
+}
+.sudoku > div > input:focus {
+	transition: 0.3s;
+	background: rgb(0, 129, 129);
+}
+.sudoku > div > input:disabled {
+	background: rgb(0, 53, 53);
+}
+.sudoku > div > input.invalid {
+	transition: 0.3s;
+	box-shadow: inset 0 0 0 4px #e74c3c;
+	background: #8b2e24;
+}
+.sudoku > div > input::-webkit-outer-spin-button,
+.sudoku > div > input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+/* Firefox */
+.sudoku input[type="number"] {
+	-moz-appearance: textfield;
+}

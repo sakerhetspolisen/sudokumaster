@@ -1,0 +1,50 @@
+.app {
+	display: grid;
+	min-height: 100vh;
+	min-height: -webkit-fill-available;
+	grid-template-rows: 80px 1fr 70px;
+}
+.appHeader {
+	background-color: aqua;
+	color: #202020;
+	font-family: "Kaushan Script", cursive;
+}
+.appMain {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.sudokuHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 20px 0;
+}
+
+.sudokuHeader button {
+	background: rgb(65, 212, 151);
+	font-size: 0.8em;
+	border: none;
+	outline: none;
+	padding: 7px 10px;
+	font-weight: bold;
+	margin-left: 8px;
+	transition: 0.3s;
+	color: rgb(7, 51, 33);
+	cursor: pointer;
+}
+.sudokuHeader button:hover {
+	background: rgb(103, 226, 175);
+	transition: 0.3s;
+}
+.sudokuHeader button:disabled {
+	background: rgb(32, 105, 75);
+}
+.sudokuHeader .radio {
+	font-size: 0.9em;
+}
+.sudokuHeader .radio p {
+	margin: 5px 0;
+	font-weight: bold;
+}
