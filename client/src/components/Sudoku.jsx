@@ -3,6 +3,7 @@ import React, {
 	useEffect,
 	forwardRef,
 	useImperativeHandle,
+	useRef,
 } from "react";
 import styles from "./Sudoku.module.css";
 import { toast } from "react-toastify";
@@ -11,10 +12,23 @@ const Sudoku = ({ startValues, handleFinish }, ref) => {
 	const [realValues, setRealValues] = useState(
 		Array(9).fill(Array(9).fill(""))
 	);
+	const disabledFields = useRef(Array(9).fill(Array(9).fill(false)));
 
 	useEffect(() => {
 		setRealValues(startValues);
-	}, [startValues]);
+		const disableFields = () => {
+			let fieldsToDisable = [];
+			for (let i in startValues) {
+				let nestedList = [];
+				for (let j in startValues[i]) {
+					nestedList.push(startValues[i][j] === "" ? false : true);
+				}
+				fieldsToDisable.push(nestedList);
+			}
+			disabledFields.current = fieldsToDisable;
+		};
+		disableFields();
+	}, [startValues, disabledFields]);
 
 	const isFinished = () => {
 		let nEmptyFields = 0;
@@ -57,7 +71,7 @@ const Sudoku = ({ startValues, handleFinish }, ref) => {
 		},
 	}));
 
-	const SudokuTile = ({ initValue, coord }) => {
+	const SudokuTile = ({ initValue, disabled, coord }) => {
 		const [invalid, setInvalid] = useState(false);
 		const [value, setValue] = useState(initValue);
 
@@ -66,12 +80,12 @@ const Sudoku = ({ startValues, handleFinish }, ref) => {
 			var isDigit = /^\d+$/.test(val);
 			var isDelete = val === "";
 
-			if (isDigit) {
+			if (isDigit && val !== "0") {
 				setValue(val);
 				if (valueIsValid(coord.y, coord.x, val)) {
 					updateRealValues(coord.y, coord.x, val);
 					setInvalid(false);
-					toast.success(`${val} passar där! 😍`, {
+					toast.success(`${val} passar nog där! 😍`, {
 						hideProgressBar: true,
 					});
 					if (isFinished()) handleFinish();
@@ -97,8 +111,8 @@ const Sudoku = ({ startValues, handleFinish }, ref) => {
 					type="text"
 					pattern="[0-9]*"
 					onInput={handleInput}
-					disabled={initValue === "" ? false : true}
 					className={invalid ? styles.invalid : null}
+					disabled={disabled}
 					value={value}
 				></input>
 			</div>
@@ -111,6 +125,7 @@ const Sudoku = ({ startValues, handleFinish }, ref) => {
 			board.push(
 				<SudokuTile
 					initValue={realValues[i][j]}
+					disabled={disabledFields.current[i][j]}
 					coord={{ y: i, x: j }}
 					key={parseInt(i) * 8 + parseInt(j) + parseInt(i)}
 				/>
